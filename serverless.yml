@@ -37,6 +37,12 @@ functions:
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
   # - authorizer: authenticate using the AWS IAM role
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
   create:
     handler: create.main
     events:
@@ -45,12 +51,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: hello
-          method: get
+
   get:
     # Defines an HTTP API endpoint that calls the main function in get.js
     # - path: url path is /notes/{id}
@@ -59,5 +60,13 @@ functions:
       - http:
           path: notes/{id}
           method: get
+          cors: true
+          authorizer: aws_iam
+  update:
+    handler: update.main
+    events:
+      - http:
+          path: notes/{id}
+          method: put
           cors: true
           authorizer: aws_iam
